@@ -13,29 +13,30 @@ public class App {
 
         get("/", (request, response) -> {
           HashMap<String, Object> model = new HashMap<String, Object>();
-          // model.put("template", "templates/index.vtl");
-          // model.put("todos", request.session().attribute("todos"));
+          model.put("template", "templates/index.vtl");
+          model.put("places", request.session().attribute("places"));
           return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-        // post("/todos", (request, response) -> {
-        //   HashMap<String, Object> model = new HashMap<String, Object>();
-        //
-        //   ArrayList<ToDo> todos = request.session().attribute("todos");
-        //
-        //   if (todos == null) {
-        //     todos = new ArrayList<ToDo>();
-        //     request.session().attribute("todos", todos);
-        //   }
-        //
-        //   String description = request.queryParams("description");
-        //   ToDo newToDo = new ToDo(description);
-        //
-        //   todos.add(newToDo);
-        //
-        //   model.put("template", "templates/success.vtl");
-        //   return new ModelAndView(model, layout);
-        // }, new VelocityTemplateEngine());
+        post("/places", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+
+          ArrayList<Places> places = request.session().attribute("places");
+
+          if (places == null) {
+            places = new ArrayList<Places>();
+            request.session().attribute("places", places);
+          }
+
+          String place = request.queryParams("place");
+          int year = Integer.parseInt(request.queryParams("year"));
+          Places newPlace = new Places(place, year);
+
+          places.add(newPlace);
+
+          model.put("template", "templates/success.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
 
     }
 }

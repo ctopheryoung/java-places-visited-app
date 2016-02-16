@@ -18,19 +18,20 @@ public class AppTest extends FluentTest {
   public static ServerRule server = new ServerRule();
 
 
-  // @Test
-  // public void rootTest() {
-  //   goTo("http://localhost:4567/");
-  //   assertThat(pageSource()).contains("To-do list!");
-  // }
-  //
-  // @Test
-  // public void toDoIsCreatedTest() {
-  //   goTo("http://localhost:4567/");
-  //   fill("#description").with("Learn to code");
-  //   submit(".btn");
-  //   assertThat(pageSource()).contains("Your task has been saved.");
-  // }
+  @Test
+  public void rootTest() {
+    goTo("http://localhost:4567/");
+    assertThat(pageSource()).contains("Places You've Visited");
+  }
+
+  @Test
+  public void checkPlaceSaved() {
+    goTo("http://localhost:4567/");
+    fill("#place").with("Portland, OR");
+    fill("#year").with("2016");
+    submit(".btn");
+    assertThat(pageSource()).contains("Your Place and Year have been saved!");
+  }
   //
   // @Test
   // public void toDoIsDisplayedTest() {
